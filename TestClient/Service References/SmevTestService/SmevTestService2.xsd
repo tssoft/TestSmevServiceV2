@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://mustiksprogramming.blogspot.com/" elementFormDefault="qualified" targetNamespace="http://mustiksprogramming.blogspot.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:2485/SmevTestService.svc?xsd=xsd1" namespace="http://smev.gosuslugi.ru/rev120315" />
+  <xs:element name="GetTestData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q1="http://smev.gosuslugi.ru/rev120315" minOccurs="0" maxOccurs="1" ref="q1:Message" />
+        <xs:element xmlns:q2="http://smev.gosuslugi.ru/rev120315" minOccurs="0" maxOccurs="1" ref="q2:MessageData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetTestDataResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://smev.gosuslugi.ru/rev120315" minOccurs="0" maxOccurs="1" ref="q3:Message" />
+        <xs:element xmlns:q4="http://smev.gosuslugi.ru/rev120315" minOccurs="0" maxOccurs="1" ref="q4:MessageData" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="ecae3617-3cf7-46c0-9a9b-65ab5b7fa8bf" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:2485/SmevTestService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="SmevTestService.disco" MetadataType="Disco" ID="8046a1be-0eb7-4d9e-9df5-67e790480069" SourceId="1" SourceUrl="http://localhost:2485/SmevTestService.svc?disco" />
+    <MetadataFile FileName="SmevTestService1.xsd" MetadataType="Schema" ID="3bee3824-20f2-4112-ac23-a419b6314469" SourceId="1" SourceUrl="http://localhost:2485/SmevTestService.svc?xsd=xsd1" />
+    <MetadataFile FileName="SmevTestService2.xsd" MetadataType="Schema" ID="d6b0d38a-bf7c-4fdc-bbd8-ef5bacf094a8" SourceId="1" SourceUrl="http://localhost:2485/SmevTestService.svc?xsd=xsd0" />
+    <MetadataFile FileName="SmevTestService.wsdl" MetadataType="Wsdl" ID="784b4dc4-21ad-4dab-a8fc-592fd8b6b419" SourceId="1" SourceUrl="http://localhost:2485/SmevTestService.svc?wsdl" />
+    <MetadataFile FileName="SmevTestService.xsd" MetadataType="Schema" ID="3cc0ab23-27dd-4ef5-9e71-75f936e4b35d" SourceId="1" SourceUrl="http://localhost:2485/SmevTestService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

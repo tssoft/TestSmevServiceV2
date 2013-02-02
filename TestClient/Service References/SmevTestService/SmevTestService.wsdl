@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://mustiksprogramming.blogspot.com/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="SmevTestService" targetNamespace="http://mustiksprogramming.blogspot.com/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://mustiksprogramming.blogspot.com/Imports">
+      <xsd:import schemaLocation="http://localhost:2485/SmevTestService.svc?xsd=xsd0" namespace="http://mustiksprogramming.blogspot.com/" />
+      <xsd:import schemaLocation="http://localhost:2485/SmevTestService.svc?xsd=xsd1" namespace="http://smev.gosuslugi.ru/rev120315" />
+      <xsd:import schemaLocation="http://localhost:2485/SmevTestService.svc?xsd=xsd2" namespace="http://www.w3.org/2004/08/xop/include" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="GetTestData">
+    <wsdl:part name="parameters" element="tns:GetTestData" />
+  </wsdl:message>
+  <wsdl:message name="GetTestData_Headers">
+    <wsdl:part xmlns:q1="http://smev.gosuslugi.ru/rev120315" name="Header" element="q1:Header" />
+  </wsdl:message>
+  <wsdl:message name="GetTestDataResponse">
+    <wsdl:part name="parameters" element="tns:GetTestDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetTestDataResponse_Headers">
+    <wsdl:part xmlns:q2="http://smev.gosuslugi.ru/rev120315" name="Header" element="q2:Header" />
+  </wsdl:message>
+  <wsdl:portType name="ISmevTestService">
+    <wsdl:operation name="GetData">
+      <wsdl:input wsaw:Action="http://mustiksprogramming.blogspot.com/ISmevTestService/GetData" name="GetTestData" message="tns:GetTestData" />
+      <wsdl:output wsaw:Action="http://mustiksprogramming.blogspot.com/ISmevTestService/GetDataResponse" name="GetTestDataResponse" message="tns:GetTestDataResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="CustomBinding_ISmevTestService" type="tns:ISmevTestService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetData">
+      <soap:operation soapAction="http://mustiksprogramming.blogspot.com/ISmevTestService/GetData" style="document" />
+      <wsdl:input name="GetTestData">
+        <soap:header message="tns:GetTestData_Headers" part="Header" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="GetTestDataResponse">
+        <soap:header message="tns:GetTestDataResponse_Headers" part="Header" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SmevTestService">
+    <wsdl:port name="CustomBinding_ISmevTestService" binding="tns:CustomBinding_ISmevTestService">
+      <soap:address location="http://localhost:2485/SmevTestService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
