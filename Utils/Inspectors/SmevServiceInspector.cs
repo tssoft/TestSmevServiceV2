@@ -21,7 +21,7 @@ namespace Utils
 
         public SmevServiceInspector()
         {
-            var store = new X509Store(StoreName.My, StoreLocation.CurrentUser);
+            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
             store.Open(OpenFlags.ReadOnly);
 
             //сертификат
