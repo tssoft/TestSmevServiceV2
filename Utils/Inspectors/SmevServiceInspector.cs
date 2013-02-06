@@ -29,7 +29,7 @@ namespace Utils
 
             if (coll.Count == 0)
             {
-                throw new FileNotFoundException(string.Format("Сертификат клиента не найден. Отпечаток {0}", ConfigurationManager.AppSettings["serverCert"]));
+                throw new FileNotFoundException(string.Format("Сертификат сервера не найден. Отпечаток {0}", ConfigurationManager.AppSettings["serverCert"]));
             }
             serviceCert = coll[0];
         }
