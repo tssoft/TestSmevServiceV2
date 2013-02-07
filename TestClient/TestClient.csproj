@@ -57,7 +57,9 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
+    <None Include="app.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\SmevTestService\SmevTestService.wsdl" />
     <None Include="Service References\SmevTestService\SmevTestService.xsd">
       <SubType>Designer</SubType>
