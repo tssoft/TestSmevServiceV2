@@ -96,13 +96,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Utils\Utils.csproj">
-      <Project>{295C4D25-269D-4CD2-A567-709D9D9A6BC1}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
+    <None Include="Service References\SmevTestService\SmevTestService.disco" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Service References\SmevTestService\SmevTestService.disco" />
+    <ProjectReference Include="..\Utils\SmevUtils.csproj">
+      <Project>{295C4D25-269D-4CD2-A567-709D9D9A6BC1}</Project>
+      <Name>SmevUtils</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

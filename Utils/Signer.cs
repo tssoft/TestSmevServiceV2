@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Xml;
-
-namespace Utils
+﻿namespace SmevUtils
 {
+    using System;
+    using System.Security.Cryptography.X509Certificates;
+    using System.Security.Cryptography.Xml;
+    using System.Xml;
+
     public static class Signer
     {
         public static string SignMessage(string message, string certificateID, X509Certificate2 certificate)
@@ -25,7 +22,7 @@ namespace Utils
                 document.InsertBefore(declaration, document.FirstChild);
             }
 
-            // Убираем Action (MustUnderstand). 
+            // Убираем Action (MustUnderstand).
             /*var nodeList = document.GetElementsByTagName("Action");
             if (nodeList.Count > 0)
             {
@@ -33,12 +30,14 @@ namespace Utils
                 headerNode.RemoveChild(nodeList[0]);
             }*/
 
-            // Ищем body и добавляем ему Id 
+            // Ищем body и добавляем ему Id
             var ns = new XmlNamespaceManager(document.NameTable);
             ns.AddNamespace("s", "http://schemas.xmlsoap.org/soap/envelope/");
             var body = document.DocumentElement.SelectSingleNode(@"//s:Body", ns) as XmlElement;
             if (body == null)
+            {
                 throw new ApplicationException("Не найден тэг body");
+            }
             body.RemoveAllAttributes();
             body.SetAttribute("wsu:Id", "body");
 
@@ -82,7 +81,6 @@ namespace Utils
             return message;
         }
 
-
         private static XmlNamespaceManager GetNewFilledNamespaceManager(XmlNameTable xmlNameTable)
         {
             var namespaceManager = new XmlNamespaceManager(xmlNameTable);
@@ -98,8 +96,7 @@ namespace Utils
         {
             bool result = true;
 
-            var nodeList = doc.GetElementsByTagName(
-               "Security", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
+            var nodeList = doc.GetElementsByTagName("Security", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd");
 
             for (var curSignature = 0; curSignature < nodeList.Count; curSignature++)
             {
@@ -120,7 +117,6 @@ namespace Utils
                 // Проверяем подпись
                 result = result && signedXml.CheckSignature(c, true);
             }
-
 
             return result;
         }

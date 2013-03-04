@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using TestClient.SmevTestService;
-
-namespace TestClient
+﻿namespace TestClient
 {
+    using System;
+    using TestClient.SmevTestService;
+
     internal class Program
     {
         private static void Main(string[] args)
         {
             var client = new SmevTestServiceClient();
 
-            client.Endpoint.Behaviors.Add(new Utils.SmevClientBehavior());
+            client.Endpoint.Behaviors.Add(new SmevUtils.SmevClientBehavior());
 
             var header = new HeaderType
                          {
@@ -58,7 +55,7 @@ namespace TestClient
                                   AppDocument = new AppDocumentType
                                   {
                                       RequestCode = "req_" + Guid.NewGuid(),
-                                      ItemsElementName = new []
+                                      ItemsElementName = new[]
                                       {
                                           ItemsChoiceType.BinaryData
                                       },

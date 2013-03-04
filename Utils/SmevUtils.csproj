@@ -8,8 +8,8 @@
     <ProjectGuid>{295C4D25-269D-4CD2-A567-709D9D9A6BC1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Utils</RootNamespace>
-    <AssemblyName>Utils</AssemblyName>
+    <RootNamespace>SmevUtils</RootNamespace>
+    <AssemblyName>SmevUtils</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

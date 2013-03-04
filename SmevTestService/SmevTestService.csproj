@@ -75,9 +75,9 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Utils\Utils.csproj">
+    <ProjectReference Include="..\Utils\SmevUtils.csproj">
       <Project>{295C4D25-269D-4CD2-A567-709D9D9A6BC1}</Project>
-      <Name>Utils</Name>
+      <Name>SmevUtils</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

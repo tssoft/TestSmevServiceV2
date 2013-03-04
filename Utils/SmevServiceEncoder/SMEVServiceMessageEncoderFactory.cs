@@ -1,7 +1,7 @@
-﻿using System.ServiceModel.Channels;
-
-namespace Utils
+﻿namespace SmevUtils
 {
+    using System.ServiceModel.Channels;
+
     public class SmevServiceMessageEncoderFactory : MessageEncoderFactory
     {
         internal readonly string SenderActor = string.Empty;

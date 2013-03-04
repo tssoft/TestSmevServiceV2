@@ -1,61 +1,55 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography.Xml;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.ServiceModel.Dispatcher;
-using System.Configuration;
-using System.Text;
-using System.Xml;
-
-namespace Utils
+﻿namespace SmevUtils
 {
-    public class SmevServiceInspector : Attribute,
-        IServiceBehavior,
-        IDispatchMessageInspector
+    using System;
+    using System.Collections.ObjectModel;
+    using System.Configuration;
+    using System.IO;
+    using System.Security.Cryptography.X509Certificates;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Description;
+    using System.ServiceModel.Dispatcher;
+    using System.Text;
+    using System.Xml;
+
+    public class SmevServiceInspector : Attribute, IServiceBehavior, IDispatchMessageInspector
     {
         private X509Certificate2 serviceCert;
+        private object serviceCertCriteria = ConfigurationManager.AppSettings["serviceCertCriteria"];
+        private X509FindType findType = (X509FindType)Enum.Parse(typeof(X509FindType), ConfigurationManager.AppSettings["serviceCertFindType"].ToString(), true);
+        private StoreName storeName = (StoreName)Enum.Parse(typeof(StoreName), ConfigurationManager.AppSettings["serviceCertStoreName"].ToString(), true);
+        private StoreLocation storeLocation = (StoreLocation)Enum.Parse(typeof(StoreLocation), ConfigurationManager.AppSettings["serviceCertStoreLocation"].ToString(), true);
 
         public SmevServiceInspector()
         {
-            var store = new X509Store(StoreName.My, StoreLocation.LocalMachine);
+            var store = new X509Store(storeName, storeLocation);
             store.Open(OpenFlags.ReadOnly);
 
             //сертификат
-            var coll = store.Certificates.Find(X509FindType.FindByThumbprint, ConfigurationManager.AppSettings["serverCert"], true);
+            var coll = store.Certificates.Find(findType, serviceCertCriteria, true);
 
             if (coll.Count == 0)
             {
-                throw new FileNotFoundException(string.Format("Сертификат сервера не найден. Отпечаток {0}", ConfigurationManager.AppSettings["serverCert"]));
+                throw new FileNotFoundException(string.Format("Сертификат сервера с признаком \"{0}\" не найден.", serviceCertCriteria));
             }
             serviceCert = coll[0];
         }
 
         public void Validate(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
         {
-            //Пусто
         }
 
         public void AddBindingParameters(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase, Collection<ServiceEndpoint> endpoints, BindingParameterCollection bindingParameters)
         {
-            //Пусто
         }
 
         public void ApplyDispatchBehavior(ServiceDescription serviceDescription, ServiceHostBase serviceHostBase)
         {
-            foreach (ChannelDispatcher channel
-               in serviceHostBase.ChannelDispatchers)
+            foreach (ChannelDispatcher channel in serviceHostBase.ChannelDispatchers)
             {
-                foreach (EndpointDispatcher endpoing
-                    in channel.Endpoints)
+                foreach (EndpointDispatcher endpoing in channel.Endpoints)
                 {
-                    endpoing
-                        .DispatchRuntime
-                        .MessageInspectors
-                        .Add(this);
+                    endpoing.DispatchRuntime.MessageInspectors.Add(this);
                 }
             }
         }

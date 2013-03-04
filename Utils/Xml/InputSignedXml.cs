@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Text;
-using System.Xml;
-
-namespace Utils
+﻿namespace SmevUtils
 {
+    using System;
+    using System.Reflection;
+    using System.Security.Cryptography;
+    using System.Security.Cryptography.Xml;
+    using System.Xml;
+
     public class InputSignedXml : SignedXml
     {
         public const string WSSecurityWSSENamespaceUrl =
@@ -25,23 +22,19 @@ namespace Utils
         public void ComputeSignature(string prefix)
         {
             BuildDigestedReferences();
-            var description =
-                CryptoConfig.CreateFromName(SignedInfo.SignatureMethod) as SignatureDescription;
+            var description = CryptoConfig.CreateFromName(SignedInfo.SignatureMethod) as SignatureDescription;
 
             HashAlgorithm hash = description.CreateDigest();
 
             GetDigest(hash, prefix);
-            m_signature.SignatureValue =
-                description.CreateFormatter(SigningKey).CreateSignature(hash);
-
+            m_signature.SignatureValue = description.CreateFormatter(SigningKey).CreateSignature(hash);
         }
 
         private void BuildDigestedReferences()
         {
-            Type t = typeof (SignedXml);
-            MethodInfo m = t.GetMethod("BuildDigestedReferences",
-                                       BindingFlags.NonPublic | BindingFlags.Instance);
-            m.Invoke(this, new object[] {});
+            Type t = typeof(SignedXml);
+            MethodInfo m = t.GetMethod("BuildDigestedReferences", BindingFlags.NonPublic | BindingFlags.Instance);
+            m.Invoke(this, new object[] { });
         }
 
         private byte[] GetDigest(HashAlgorithm hash, string prefix)
@@ -62,10 +55,11 @@ namespace Utils
         private void SetPrefix(string prefix, XmlNode node)
         {
             foreach (XmlNode n in node.ChildNodes)
+            {
                 SetPrefix(prefix, n);
+            }
             node.Prefix = prefix;
         }
-
 
         public XmlElement GetXml(string prefix)
         {

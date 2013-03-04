@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>SmevUtils</id>
+    <version>REPLACEME</version>
+    <authors>Alexander Sorokin</authors>
+    <owners>Alexander Sorokin</owners>
+    <!-- <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl> -->
+    <projectUrl>https://github.com/mustiks/TestSmevServiceV2</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>REPLACEME</description>
+    <copyright>REPLACEME</copyright>
+    <tags>SMEV WCF</tags>
+    <dependencies>
+    </dependencies>
+  </metadata>
+  <files>
+	<file src="SmevUtils.dll" target="lib\net4" />
+  </files>
+</package>

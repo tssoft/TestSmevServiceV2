@@ -1,11 +1,11 @@
-﻿using System;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.Xml;
-
-namespace Utils
+﻿namespace SmevUtils
 {
+    using System;
+    using System.ServiceModel;
+    using System.ServiceModel.Channels;
+    using System.ServiceModel.Description;
+    using System.Xml;
+
     public sealed class SmevServiceMessageEncodingBindingElement : MessageEncodingBindingElement, IWsdlExportExtension
     {
         private readonly MessageVersion _vers = MessageVersion.CreateVersion(EnvelopeVersion.Soap11, AddressingVersion.None);
@@ -80,7 +80,6 @@ namespace Utils
             {
                 SenderActor = SenderActor,
                 LogPath = LogPath
-                
             };
         }
 
@@ -115,7 +114,6 @@ namespace Utils
 
         public void ExportContract(WsdlExporter exporter, WsdlContractConversionContext context)
         {
-            
         }
 
         public void ExportEndpoint(WsdlExporter exporter, WsdlEndpointConversionContext context)

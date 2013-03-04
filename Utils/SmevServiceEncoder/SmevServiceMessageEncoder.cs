@@ -1,18 +1,18 @@
-﻿using System;
-using System.IO;
-using System.Security.Cryptography;
-using System.ServiceModel;
-using System.ServiceModel.Channels;
-using System.Text;
-using System.Xml;
-
-namespace Utils
+﻿namespace SmevUtils
 {
+    using System;
+    using System.IO;
+    using System.ServiceModel.Channels;
+    using System.Text;
+    using System.Xml;
+
     public class SmevServiceMessageEncoder : MessageEncoder
     {
         private const string Soap11Namespace = "http://schemas.xmlsoap.org/soap/envelope/";
+
         private string soapEnvelope =
             "<s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\"><s:Header></s:Header><s:Body></s:Body></s:Envelope>";
+
         private readonly SmevServiceMessageEncoderFactory _factory;
         private readonly string _contentType;
         private readonly MessageEncoder _innerEncoder;
@@ -59,7 +59,7 @@ namespace Utils
             var xmlDocument = new XmlDocument();
             xmlDocument.PreserveWhitespace = true;
             xmlDocument.Load(reader);
-            
+
             LogMessage(xmlDocument, true);
 
             var nodeList = xmlDocument.GetElementsByTagName(
@@ -68,8 +68,7 @@ namespace Utils
             // Хорошо бы проверять наличие именно подписей СМЭВ и ОВ
             if (nodeList.Count < 1)
             {
-                return CreateErrorMessage(bufferManager, contentType, "SMEV-100008",
-                                          "Не найдена подпись документа");
+                return CreateErrorMessage(bufferManager, contentType, "SMEV-100008", "Не найдена подпись документа");
             }
 
             var xmlDocument2 = new XmlDocument();
@@ -79,8 +78,7 @@ namespace Utils
             // Проверяем подпись
             if (!(Signer.CheckSignature(xmlDocument) || Signer.CheckSignature(xmlDocument2)))
             {
-                return CreateErrorMessage(bufferManager, contentType, "SMEV-100003",
-                                          "Неверная ЭП сообщения");
+                return CreateErrorMessage(bufferManager, contentType, "SMEV-100003", "Неверная ЭП сообщения");
             }
 
             var bytes = new UTF8Encoding().GetBytes(xmlDocument.OuterXml);
@@ -108,7 +106,6 @@ namespace Utils
             bodyElement = bodyElements[0];
             bodyElement.AppendChild(faultElement);
             return CreateMessage(doc, bufferManager, contentType);
-
         }
 
         private Message CreateMessage(XmlDocument xmlDocument, BufferManager bufferManager, string contentType)
@@ -185,16 +182,15 @@ namespace Utils
                 }
                 else
                 {
-                    var s = input ? "Request_" : "Responce_";
+                    var s = input ? "Request_" : "Response_";
                     SaveMessage(input, doc.InnerXml.Replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", ""), s);
                 }
             }
             catch
             {
-                var s = input ? "Request_" : "Responce_";
+                var s = input ? "Request_" : "Response_";
                 SaveMessage(input, doc.InnerXml.Replace("<?xml version=\"1.0\" encoding=\"utf-8\"?>", ""), s);
             }
-            
         }
 
         private void SaveMessage(bool input, string message, string name)
@@ -217,7 +213,7 @@ namespace Utils
             {
                 try
                 {
-                    name = input ? "Request_" : "Responce_";
+                    name = input ? "Request_" : "Response_";
                     File.WriteAllText(dir + now + name + ".xml", message);
                 }
                 catch (Exception e)
@@ -230,9 +226,7 @@ namespace Utils
                     {
                         // Если уже ничего не помогло ничего и не пишем
                     }
-
                 }
-
             }
         }
     }

@@ -1,13 +1,12 @@
-﻿using System.ServiceModel;
-
-namespace SmevTestService
+﻿namespace SmevTestService
 {
+    using System.ServiceModel;
+
     // ПРИМЕЧАНИЕ. Команду "Переименовать" в меню "Рефакторинг" можно использовать для одновременного изменения имени интерфейса "ISmevTestService" в коде и файле конфигурации.
     [ServiceContract(Namespace = "http://mustiksprogramming.blogspot.com/")]
     [XmlSerializerFormat]
     public interface ISmevTestService
     {
-
         [OperationContract]
         [XmlSerializerFormat]
         GetTestDataResponse GetData(GetTestData data);
