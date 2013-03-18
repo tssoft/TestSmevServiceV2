@@ -20,7 +20,16 @@
                 return KeyInfo.GetXml();
             }
 
-            return base.GetIdElement(document, idValue);
+            XmlElement idElem = base.GetIdElement(document, idValue);
+
+            if (idElem == null)
+            {
+                XmlNamespaceManager nsManager = new XmlNamespaceManager(document.NameTable);
+                nsManager.AddNamespace("wsu", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
+                idElem = document.SelectSingleNode("//*[@wsu:Id=\"" + idValue + "\"]", nsManager) as XmlElement;
+            }
+
+            return idElem;
         }
 
         public void ComputeSignature(string prefix)

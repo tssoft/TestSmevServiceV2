@@ -7,6 +7,8 @@
 
     public static class Signer
     {
+        private const string BodyId = "body";
+
         public static string SignMessage(string message, string certificateID, X509Certificate2 certificate)
         {
             var document = new XmlDocument
@@ -14,6 +16,8 @@
                 PreserveWhitespace = false
             };
             document.LoadXml(message);
+
+            document.DocumentElement.SetAttribute("xmlns:wsu", "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd");
 
             // Добавляем XmlDeclaration -не думаю что это необходимо
             if (!(document.FirstChild is XmlDeclaration))
@@ -30,16 +34,22 @@
                 headerNode.RemoveChild(nodeList[0]);
             }*/
 
+
+
+
             // Ищем body и добавляем ему Id
-            var ns = new XmlNamespaceManager(document.NameTable);
-            ns.AddNamespace("s", "http://schemas.xmlsoap.org/soap/envelope/");
-            var body = document.DocumentElement.SelectSingleNode(@"//s:Body", ns) as XmlElement;
+            var namespaceManager = GetNewFilledNamespaceManager(document.NameTable);
+            var body = document.DocumentElement.SelectSingleNode(@"//s:Body", namespaceManager) as XmlElement;
             if (body == null)
             {
                 throw new ApplicationException("Не найден тэг body");
             }
             body.RemoveAllAttributes();
-            body.SetAttribute("wsu:Id", "body");
+
+            var idAttr = document.CreateNode(XmlNodeType.Attribute, "wsu", "Id", namespaceManager.LookupNamespace("wsu"));
+            body.Attributes.SetNamedItem(idAttr).InnerText = BodyId;
+
+
 
             // Получаем подпись
             var mySignedXml = new OutputSignedXml(document)
@@ -48,7 +58,7 @@
             };
             var reference = new Reference
             {
-                Uri = "#body",
+                Uri = "#" + BodyId,
                 DigestMethod = "http://www.w3.org/2001/04/xmldsig-more#gostr3411"
             };
             var excC14Ntransform = new XmlDsigExcC14NTransform();
@@ -62,7 +72,6 @@
             mySignedXml.ComputeSignature("ds");
 
             // Вставляем подпись в сообщение
-            var namespaceManager = GetNewFilledNamespaceManager(document.NameTable);
             document.SelectSingleNode("/s:Envelope", namespaceManager).InsertBefore(document.CreateNode(XmlNodeType.Element, "s", "Header", namespaceManager.LookupNamespace("s")), document.SelectSingleNode("/s:Envelope/s:Body", namespaceManager));
             document.SelectSingleNode("/s:Envelope/s:Header", namespaceManager).AppendChild(document.CreateNode(XmlNodeType.Element, "wsse", "Security", namespaceManager.LookupNamespace("wsse"))).Attributes.SetNamedItem(document.CreateNode(XmlNodeType.Attribute, "s", "actor", namespaceManager.LookupNamespace("s"))).InnerText = "http://smev.gosuslugi.ru/actors/smev";
             document.SelectSingleNode("/s:Envelope/s:Header/wsse:Security", namespaceManager).AppendChild(document.CreateNode(XmlNodeType.Element, "wsse", "BinarySecurityToken", namespaceManager.LookupNamespace("wsse")));
